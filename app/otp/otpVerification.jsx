@@ -5,7 +5,12 @@ import { Snackbar,TextInput as Iconx,ActivityIndicator} from 'react-native-paper
 import {SafeAreaView} from 'react-native-safe-area-context'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-export default function ForgetPassword() {
+import axios from 'axios'
+import { StatusBar } from 'expo-status-bar'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+
+export default function OtpVerification() {
 
   
    
@@ -13,8 +18,8 @@ export default function ForgetPassword() {
 
     const router = useRouter()
    
-    const {name,phone,email,dob,address,username,password} =useLocalSearchParams()
-    const params = useLocalSearchParams();
+    const {name,phone,email,dob,address,username,password} =useLocalSearchParams();
+    const params = useLocalSearchParams()
     const [otpError,setOtpError] = useState(false)
     const [firstDigit,setFirstDigit] = useState(0)
     const [secondDigit,setSecondDigit] = useState(0)
@@ -96,50 +101,103 @@ export default function ForgetPassword() {
 
 async function nextHandler(){
     setShowLoader(true)
-    let resp = await fetch("https://codelabs-server-sp7w.onrender.com/user/signupOTPVerification",{
-      method:"POST",
-      headers:{
-        "Accept":"application/json",
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        name:name,
-        phone:Number(phone),
-        email:email,
-        dob:dob,
-        address:address,
-        username:username,
-        password:password,
+   
+    if(params.operation == "signup"){
+      let resp = await fetch("https://codelabs-server-sp7w.onrender.com/user/signupOTPVerification",{
+        method:"POST",
+        headers:{
+          "Accept":"application/json",
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          name:name,
+          phone:Number(phone),
+          email:email,
+          dob:dob,
+          address:address,
+          username:username,
+          password:password,
+          otp:Number(firstDigit+secondDigit+thirdDigit+fourthDigit+fifthDigit+sixthDigit)
+        })
+      })
+      let data = await resp.json();
+  
+  
+      console.warn(data);
+      
+  
+  
+     
+      
+  
+      if(data.success == true){
+        setShowLoader(false)
+        setShowSuccess(true)
+  
+        setTimeout(()=>{
+          router.push({
+            pathname:"/"
+          })
+        },3000)
+      }else{
+        setShowLoader(false)
+        setOtpError(true)
+      }
+    }else if(params.operation == "login"){
+
+      let response = await axios.post("https://codelabs-server-sp7w.onrender.com/user/loginOtpVerification",{
         otp:Number(firstDigit+secondDigit+thirdDigit+fourthDigit+fifthDigit+sixthDigit)
       })
-    })
-
-    console.log(Number(firstDigit+secondDigit+thirdDigit+fourthDigit+fifthDigit+sixthDigit));
-    
-
-    let data = await resp.json();
 
 
-    console.warn(data);
-    
+      if(response.data.success == true){
 
-
-   
-    
-
-    if(data.success == true){
+        try {
+          await AsyncStorage.setItem("isLoggedIn","true");
+          router.replace({
+            pathname:"/"
+          })
+        } catch (error) {
+          console.warn(error.message);
+          
+        }
+        
+      }else{
+        setOtpError(true)
+      }
       setShowLoader(false)
-      setShowSuccess(true)
 
-      setTimeout(()=>{
+    }else if(params.operation == "forgetpassword"){
+
+      // For forget password route
+     
+      let forgetPasswordResponse = await await axios.post("https://codelabs-server-sp7w.onrender.com/user/forgetPasswordOTPVerification",{
+        clientOTP:Number(firstDigit+secondDigit+thirdDigit+fourthDigit+fifthDigit+sixthDigit)
+      })
+
+
+      if(forgetPasswordResponse.data.success == true){
         router.push({
-          pathname:"/"
+          pathname:"../forgetPassword/changePassword",
+          params:{
+            email:params.email
+          }
         })
-      },3000)
+      }
+      
+
+
+
+      // For forget password route
+      
     }else{
-      setShowLoader(false)
-      setOtpError(true)
+      console.warn("Not Matched");
+      
     }
+
+
+
+    
    
    
 }
@@ -147,7 +205,7 @@ async function nextHandler(){
     
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
-
+             <StatusBar style="dark"  />
         <Snackbar visible={showSuccess} onDismiss={()=>setShowSuccess(false)} duration={3000} style={{backgroundColor:"black"}}
          action={{
           label:<Iconx.Icon onPress={()=>setShowSuccess(false)} icon="close" color="white" size={20}/>
@@ -392,7 +450,7 @@ async function nextHandler(){
      
    
      <Text
-        style={{fontSize:responsiveFontSize(1.6),color:"#777777",marginVertical:responsiveScreenHeight(.5)}}>Enter the code we sent to your email address. Then you will be able to reset your password.</Text>
+        style={{fontSize:responsiveFontSize(1.6),color:"#777777",marginVertical:responsiveScreenHeight(.5)}}>Enter the code we sent to your email address. Then you will be able to perform further operations.</Text>
 
         
 

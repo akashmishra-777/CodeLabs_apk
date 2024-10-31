@@ -82,33 +82,12 @@ export default function SignupForm() {
              }
         })
 
-       
-           
-       
-
-         
-         
-        
-        
-
-        // router.push({
-        //   pathname:"signup/password",
-        //   params:{
-        //     name:params.name,
-        //     username:username,
-        //     email:params.email,
-        //     phone:params.phone,
-        //     dob:params.dob,
-        //     address:params.address
-        //   }
-        // })
-
-
-        
       }
     }
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
+     <StatusBar style="dark"  />
+
 
          <View style={[styles.signupFormContainer,{marginTop:responsiveScreenHeight(0),backgroundColor:"white",width:"100%"}]}>
         {/* Label */}

@@ -6,6 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import axios from 'axios'
+import { StatusBar } from 'expo-status-bar'
 
 export default function SignupForm() {
   
@@ -56,7 +57,7 @@ export default function SignupForm() {
     const router = useRouter()
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
-
+     <StatusBar style="dark"  />
 
 
 

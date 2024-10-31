@@ -11,6 +11,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import { StatusBar } from "expo-status-bar";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -53,6 +54,8 @@ const [showNullError,setShowNullError] = useState(false)
         backgroundColor: "white",
       }}
     >
+
+<StatusBar style="dark"  />
       <View
         style={[
           styles.signupFormContainer,

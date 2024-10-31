@@ -16,6 +16,7 @@ export default  function ai_bot() {
     const [messages,setMessages] = useState([])
     const [msgValue,setMsgValue] = useState("")
     const scrollBottom = useRef(null)
+    const [inpFocus,setInpFocus] = useState(true);
    
 
     function scroll(){
@@ -52,9 +53,9 @@ export default  function ai_bot() {
 
 
     return <>
-    <StatusBar backgroundColor='white' style='dark-content'/>
-
+    
     <SafeAreaView style={styles.mainContainer}>
+    <StatusBar style="light" />
 
 
         <View style={styles.header}>
@@ -128,21 +129,6 @@ export default  function ai_bot() {
 
 
 
-  
-
-
-
-
-
- 
-
-
-
-  
-
-
-
-
 
 <ScrollView ref={scrollBottom} style={{
     marginBottom:responsiveScreenHeight(7)
@@ -150,12 +136,17 @@ export default  function ai_bot() {
 
 
 
-{messages.length == 0?<View style={{
+{inpFocus  ?<View style={{
     height:responsiveScreenHeight(82),
     justifyContent:"center",
     alignItems:"center",
+  
 }}>
-    <Text>Working Fine</Text>
+    <Avatar.Image size={120} source={{uri:"https://cdn.jsdelivr.net/gh/akashmishra-777/PUBLIC_IMAGES/icon.gif"}} />
+
+
+
+
 </View>:<View style={{
     flexDirection:"row",
     justifyContent:"center",
@@ -252,10 +243,9 @@ export default  function ai_bot() {
 
 
     <TouchableOpacity>
-    <IconButton  icon="microphone" size={23}  iconColor='#648DDB'
+    <IconButton  icon="microphone" size={25}  
      style={{
         marginHorizontal:0,
-         width:responsiveScreenWidth(15),
         
     }}
     />
@@ -269,10 +259,12 @@ export default  function ai_bot() {
     cursorColor={"#648DDB"}
      placeholder="What's on your mind?"
      value={msgValue}
+     onFocus={()=>setInpFocus(false)}
      onChangeText={(text)=>setMsgValue(text)}
      style={{
         fontSize:responsiveScreenFontSize(2),
         // width:responsiveScreenWidth(70)
+
         maxWidth:responsiveScreenWidth(70),
         width:responsiveScreenWidth(70),
         paddingHorizontal:10,
@@ -283,12 +275,9 @@ export default  function ai_bot() {
 
 
 <TouchableOpacity onPress={sendHandler}>
-    <IconButton  icon="send" size={23} iconColor='#648DDB'
-     style={{
-        marginHorizontal:0,
-         width:responsiveScreenWidth(15),
-        
-    }}
+    <IconButton  icon="send" size={23}  style={{
+        color:"white"
+    }} 
     />
     </TouchableOpacity>
       </View>
@@ -313,15 +302,18 @@ const styles = StyleSheet.create({
     },
     inputView:{
         backgroundColor:"white",
-        elevation:10,
+        elevation:4,
         width:responsiveScreenWidth(100),
         position:"absolute",
         bottom:1,
         flex:1,
         flexDirection:"row",
-        justifyContent:"left",
-        
-        
+        justifyContent:"space-evenly",
+        borderTopWidth:1,
+        borderColor:"#EEEEEE",
+
+     
+  
     },header:{
         height:responsiveScreenHeight(6),
         backgroundColor:"white",
@@ -334,7 +326,7 @@ const styles = StyleSheet.create({
         width:"auto",
         marginHorizontal:10,
         marginVertical:5,
-        borderTopLeftRadius:10,
+        borderBottomLeftRadius:10,
         borderTopRightRadius:10,
         borderBottomRightRadius:10,
         elevation:2,

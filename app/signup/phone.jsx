@@ -6,6 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import { useRouter,useLocalSearchParams } from 'expo-router'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import axios from 'axios'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Phone() {
   const {name,email} = useLocalSearchParams()
@@ -63,7 +64,7 @@ export default function Phone() {
 
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
-
+     <StatusBar style="dark"  />
 
 
 

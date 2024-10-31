@@ -1,7 +1,7 @@
 import React from 'react'
 import { View,Text,TouchableOpacity,StyleSheet } from 'react-native'
 import { responsiveFontSize,responsiveScreenHeight,responsiveScreenWidth } from 'react-native-responsive-dimensions'    
-import { TextInput,ActivityIndicator} from 'react-native-paper'
+import { TextInput,ActivityIndicator,Snackbar} from 'react-native-paper'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import { useRouter,useLocalSearchParams } from 'expo-router'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -9,7 +9,8 @@ import { useState } from 'react'
 import axios from 'axios'
 import { StatusBar } from 'expo-status-bar'
 
-export default function Password() {
+
+export default function ChangePassword() {
 
     const params = useLocalSearchParams()
 
@@ -20,6 +21,7 @@ export default function Password() {
     const [ConfirmPassword,setConfirmPassword] = useState("")
     const [showNullError,setShowNullError] = useState(false)
     const [showLoading,setShowLoading] = useState(false)
+    const [showSuccess,setShowSuccess] = useState(false)
 
 
 
@@ -29,31 +31,26 @@ export default function Password() {
 
       if(regex.test(Password) && Password == ConfirmPassword){
        setShowLoading(true)
-        let resp = await axios.post("https://codelabs-server-sp7w.onrender.com/user/signupWithEmail",{
-          name:params.name,
-          email:params.email,
-          phone:params.phone,
-          dob:"2006/08/14",
-          address:params.address,
-          username:params.username,
-          password:Password
+        let resp = await axios.post("https://codelabs-server-sp7w.onrender.com/user/resetPassword",{
+          newPassword:Password,
+          confirmPassword:ConfirmPassword,
+          email:params.email
         })
+
+        console.warn(resp);
+        
 
         if(resp.data.success == true){
           setShowLoading(false)
-           router.push({
-        pathname:"otp/otpVerification",
-        params:{
-          name:params.name,
-        email:params.email,
-        phone:Number(params.phone),
-        dob:"2006/08/14",
-        address:params.address,
-        username:params.username,
-        password:Password,
-        operation:"signup"
-        }
-      })
+          setShowSuccess(true)
+
+          setTimeout(()=>{
+            router.push({
+                pathname:"/",
+            })
+          },3000)
+           
+      
         }else{
           setShowNullError(true)
           setShowLoading(false)
@@ -77,7 +74,7 @@ export default function Password() {
     const router = useRouter()
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
-     <StatusBar style="dark"  />
+             <StatusBar style="dark"  />
 
 
 
@@ -88,7 +85,13 @@ export default function Password() {
 
    
 
+<Snackbar visible={showSuccess} onDismiss={()=>setShowSuccess(false)} duration={3000} style={{backgroundColor:"black"}}
+>
 
+<Text style={{color:"white",fontSize:responsiveFontSize(1.6),fontWeight:700}}>Your password has changed successfully.</Text>
+
+
+         </Snackbar>
 
 
 
@@ -115,12 +118,12 @@ export default function Password() {
 
 
         <Text
-        style={{fontSize:responsiveFontSize(2.5),fontWeight:"bold",}}>Choose a username account</Text>
+        style={{fontSize:responsiveFontSize(2.5),fontWeight:"bold",}}>Create your new password</Text>
         <Text
         style={{fontSize:responsiveFontSize(1.6),color:"#777777",marginVertical:responsiveScreenHeight(.5)}}>Choose a strong password that contains alphanumeric characters and special characters.</Text>
        
        <TextInput
-        placeholder="Enter your password here."
+        placeholder="New Password"
         keyboardType="text"
         outlineColor='grey'
         autoFocus={true}
@@ -145,7 +148,7 @@ export default function Password() {
         />
 
        <TextInput
-        placeholder="Enter your confirm password here."
+        placeholder="Confirm password"
         keyboardType="text"
         outlineColor='grey'
         autoFocus={false}

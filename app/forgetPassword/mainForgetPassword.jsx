@@ -1,14 +1,17 @@
 import React,{useState,useEffect} from 'react'
 import { View,Text,TouchableOpacity,StyleSheet,Button } from 'react-native'
 import { responsiveFontSize,responsiveScreenHeight,responsiveScreenWidth } from 'react-native-responsive-dimensions'    
-import { TextInput} from 'react-native-paper'
+import { TextInput,ActivityIndicator} from 'react-native-paper'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import { useLocalSearchParams, useRouter } from 'expo-router'
+import {useRouter} from 'expo-router'
+
+import { StatusBar } from 'expo-status-bar'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import axios from 'axios'
 
 export default function ForgetPassword() {
 
-  
+
    
  
 
@@ -16,10 +19,16 @@ export default function ForgetPassword() {
    
 
     const [showError,setShowError] = useState(false)
+
     const [email,setEmail] = useState("")
+
+    const [showLoader,setShowLoader] = useState(false)
+
     const [emptyEmailError,setEmptyEmailError] = useState(false)
 
-    function nextHandler(){
+    const [noAccountError,setNoAccountError] = useState(false)
+
+    async function nextHandler(){
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     let checkAdvanced = String(email).split(".");
@@ -33,13 +42,37 @@ export default function ForgetPassword() {
        
         setEmptyEmailError(false)
         setShowError(false)
+        setShowLoader(true)
 
+      let resp = await axios.post("https://codelabs-server-sp7w.onrender.com/user/forgetPaswordSendOTP",{
+        email:email.toLowerCase().trim()
+      })
+
+  
+      
+
+     if(resp.data.success == true){
+
+      
        router.push({
-        pathname:"otp/otpVerification",
+        pathname:"../otp/otpVerification",
         params:{
-            email:email
+            email:email.toLowerCase().trim(),
+            operation:"forgetpassword"
         }
        })
+     }else if(resp.data.success == false){
+      setNoAccountError(true)
+     }
+
+
+      setShowLoader(false)
+      
+
+
+
+
+      
        
     }else{
         setShowError(true)
@@ -50,7 +83,7 @@ export default function ForgetPassword() {
     
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
-
+        <StatusBar style="dark"  />
 
          <View style={[styles.signupFormContainer,{marginTop:responsiveScreenHeight(0),backgroundColor:"white",width:"100%"}]}>
         {/* Label */}
@@ -77,9 +110,9 @@ export default function ForgetPassword() {
         mode="outlined"
         autoFocus={true}
         label={"Email Address"}
-        placeholder='Enter your registered email address here.'
+        placeholder='Email address'
         value={email}
-        onChangeText={(text)=>{setShowError(false); setEmptyEmailError(false); setEmail(text);}}
+        onChangeText={(text)=>{setShowError(false); setEmptyEmailError(false); setEmail(text); setNoAccountError(false)}}
         
         outlineColor='grey'
         activeOutlineColor='#648DDB'
@@ -101,6 +134,8 @@ export default function ForgetPassword() {
      {showError?<Text style={{color:"red",fontSize:responsiveFontSize(1.6),fontWeight:700}}>Invalid email address detected, Correct it.</Text>:null}
 
      {emptyEmailError?<Text style={{color:"red",fontSize:responsiveFontSize(1.6),fontWeight:700}}>Email address field is required. Fill it!</Text>:null}
+
+     {noAccountError?<Text style={{color:"red",fontSize:responsiveFontSize(1.6),fontWeight:700}}> Account not found associated with this email.</Text>:null}
    
      <Text
         style={{fontSize:responsiveFontSize(1.6),color:"#777777",marginVertical:responsiveScreenHeight(.5)}}>You may recieve SMS or email messages from us for security and login purposes.</Text>
@@ -120,7 +155,9 @@ export default function ForgetPassword() {
         }}
        
         >
-          <Text  style={{color:"white",fontSize:responsiveFontSize(1.9),fontWeight:"bold"}}>Continue</Text>
+          {
+            showLoader?<ActivityIndicator animating={true} color='white'/>:<Text  style={{color:"white",fontSize:responsiveFontSize(1.9),fontWeight:"bold"}}>Continue</Text>
+          }
         </TouchableOpacity>
   
         

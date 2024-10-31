@@ -5,6 +5,7 @@ import { TextInput} from 'react-native-paper'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Dob() {
 
@@ -50,7 +51,7 @@ export default function Dob() {
     
     return (
       <SafeAreaView style={{flex:1,justifyContent:"space-between",backgroundColor:"white"}}>
-
+     <StatusBar style="dark"  />
 
          <View style={[styles.signupFormContainer,{marginTop:responsiveScreenHeight(0),backgroundColor:"white",width:"100%"}]}>
         {/* Label */}

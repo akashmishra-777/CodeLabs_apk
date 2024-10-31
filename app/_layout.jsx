@@ -1,8 +1,9 @@
-import { Text } from 'react-native'
+
 import {Stack} from 'expo-router'
 
 export default function RootLayout() {
   return (
+    
     <Stack>
         <Stack.Screen name='index' options={{headerShown: false}} />
         <Stack.Screen name='signup/index' options={{headerShown: false}} />
@@ -15,6 +16,8 @@ export default function RootLayout() {
         <Stack.Screen name='forgetPassword/mainForgetPassword' options={{headerShown: false}} />
         <Stack.Screen name='otp/otpVerification' options={{headerShown: false}} />
         <Stack.Screen name='ai_bot' options={{headerShown: false}} />
+        <Stack.Screen name='forgetPassword/changePassword' options={{headerShown: false}} />
+        <Stack.Screen name='Home' options={{headerShown: false}} />
     </Stack>
   )
 }
