@@ -6,7 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import axios from 'axios'
-
+import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
 
 export default function SignupForm() {
@@ -15,7 +15,6 @@ export default function SignupForm() {
     const params = useLocalSearchParams()
     const [username,setUsername] = useState(null)
     const [isUsernameAvailable,setIsUsernameAvailable] = useState(false)
-    const [usernameAvailable,setUsernameAvailable] = useState(false) 
     const [showLoader,setShowLoader] = useState(false)
 
     const router = useRouter()

@@ -17,7 +17,6 @@ import { Link } from "expo-router";
 import Entypo from "react-native-vector-icons/Entypo";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Home from './Home'
 
 
 export default function Login() {
@@ -30,10 +29,6 @@ export default function Login() {
   useEffect(() => {
 
     (async ()=>{
-
-
-
-  
         try {
           const checkLogin =  await AsyncStorage.getItem("isLoggedIn")
           if(checkLogin == "true"){
@@ -43,7 +38,6 @@ export default function Login() {
           }
         } catch (error) {
           console.warn(error.message);
-          
         }
       })();
 
@@ -54,11 +48,14 @@ export default function Login() {
 
       },2000)
 
-
-
-    
   });
 
+
+    if(isLoggedIn){
+      router.replace({
+        pathname:"(tabs)"
+      })
+    }
 
 
 
@@ -73,20 +70,7 @@ export default function Login() {
     }}>
       <StatusBar style="dark" backgroundColor="white" />
       <ActivityIndicator animating={true} color="#648DDB" size={"large"} />
-      </SafeAreaView>:null}
-
-
-      {isLoggedIn?<Home/>: <LoginForm/>}
-
-      
-    
-  
-
-     
-     
-
-       
-      
+      </SafeAreaView>:<LoginForm/>}      
     </>
   );
 }
@@ -120,6 +104,9 @@ const LoginForm = () => {
           password: loginPassword,
         }
       );
+
+      
+      
 
       if (resp.data.success == true) {
         router.push({

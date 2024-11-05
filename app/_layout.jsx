@@ -6,6 +6,7 @@ export default function RootLayout() {
     
     <Stack>
         <Stack.Screen name='index' options={{headerShown: false}} />
+      <Stack.Screen name='(tabs)' options={{headerShown: false}} />
         <Stack.Screen name='signup/index' options={{headerShown: false}} />
         <Stack.Screen name='signup/email' options={{headerShown: false}} />
         <Stack.Screen name='signup/phone' options={{headerShown: false}} />
@@ -17,7 +18,6 @@ export default function RootLayout() {
         <Stack.Screen name='otp/otpVerification' options={{headerShown: false}} />
         <Stack.Screen name='ai_bot' options={{headerShown: false}} />
         <Stack.Screen name='forgetPassword/changePassword' options={{headerShown: false}} />
-        <Stack.Screen name='Home' options={{headerShown: false}} />
     </Stack>
   )
 }
