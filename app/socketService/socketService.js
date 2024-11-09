@@ -5,14 +5,15 @@ class socketService{
         this.socket = null;
     }
 
-
     connect(url){
         if(!this.socket){
             this.socket = io(url,{
                 transports:["websocket"],
                 query:{
                     "name":"Akash Mishra"
-                }
+                },
+                reconnection:true,
+                reconnectionDelay:1
             })
 
             console.log("Socket connected");
@@ -21,8 +22,6 @@ class socketService{
             return this.socket
         }
     }
-
-
 
     disconnect(){
         if(this.socket){
@@ -33,12 +32,9 @@ class socketService{
         }
     }
 
-
     getSocket(){
         return this.socket
     }
-
-
 
 }
 

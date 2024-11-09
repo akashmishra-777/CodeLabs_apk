@@ -1,349 +1,323 @@
-import React, { useState, useRef } from 'react'
-import { View,Text,StyleSheet,TextInput,Image,ScrollView} from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar } from 'expo-status-bar'
-import { responsiveScreenFontSize, responsiveScreenHeight, responsiveScreenWidth } from 'react-native-responsive-dimensions'
-import {IconButton,Avatar } from 'react-native-paper'
-import { TouchableOpacity } from 'react-native'
-import { useRouter } from 'expo-router'
-import axios from 'axios'
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  ScrollView,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import {
+  responsiveScreenFontSize,
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+} from "react-native-responsive-dimensions";
+import { IconButton, Avatar } from "react-native-paper";
+import { TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import axios from "axios";
 
+export default function ai_bot() {
+  const router = useRouter();
+  const [messages, setMessages] = useState([]);
+  const [msgValue, setMsgValue] = useState("");
+  const scrollBottom = useRef(null);
+  const [inpFocus, setInpFocus] = useState(true);
 
+  function scroll() {
+    scrollBottom.current.scrollToEnd({ animated: true });
+  }
 
-export default  function ai_bot() {
+  async function sendHandler() {
+    if (msgValue) {
+      setMessages([...messages, { msg: msgValue, show: "right" }]);
 
-    const router = useRouter()
-    const [messages,setMessages] = useState([])
-    const [msgValue,setMsgValue] = useState("")
-    const scrollBottom = useRef(null)
-    const [inpFocus,setInpFocus] = useState(true);
-   
+      scroll();
 
-    function scroll(){
-        scrollBottom.current.scrollToEnd({animated:true})
-    }
+      setMsgValue("");
 
-
-   async function sendHandler(){
-          
-        if(msgValue){
-            
-            setMessages([...messages,{msg:msgValue,show:"right"}])
-
-            scroll()
-        
-        setMsgValue("")
-
-        const data = await axios.post("https://codelabs-server-sp7w.onrender.com/ai/smartBot",{
-            msg:msgValue
-        })
-
-        if(data){
-            setMessages((previous)=> [...previous,{msg:data.data.msg,show:"left"}])
-            scroll()
+      const data = await axios.post(
+        "https://codelabs-server-sp7w.onrender.com/ai/smartBot",
+        {
+          msg: msgValue,
         }
-        }
+      );
 
-
-        
-
-
-     
+      if (data) {
+        setMessages((previous) => [
+          ...previous,
+          { msg: data.data.msg, show: "left" },
+        ]);
+        scroll();
+      }
     }
+  }
+
+  return (
+    <>
+      <StatusBar style="dark" />
+      <SafeAreaView style={styles.mainContainer}>
+
+            <View style={styles.premium}>
+          <View
+           
+          >
+            <TouchableOpacity  style={{
+              flexDirection: "row",
+              gap: responsiveScreenWidth(1),
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#EEE",
+              paddingHorizontal: responsiveScreenHeight(1.5),
+              paddingVertical: responsiveScreenHeight(.8),
+              borderRadius: 10,
+              elevation: 2,
+              marginBottom:10
+            }}
+            >
 
 
-    return <>
-    
-    <SafeAreaView style={styles.mainContainer}>
-    <StatusBar style="light" />
-
-
-        <View style={styles.header}>
-
-
-        <TouchableOpacity>
-            <IconButton  
-                onPress={()=>router.back()}
-                icon="arrow-left" size={23}  
-                iconColor='black'
-                 style={{
-                  marginHorizontal:0,
-                 width:responsiveScreenWidth(10),
-        
-    }}
-    />
-    </TouchableOpacity>
-
-    <View style={{
-        justifyContent:"center",
-        alignItems:"center",
-        width:responsiveScreenWidth(10)
-    }}>
-    <Avatar.Image size={40} source={{uri:"https://scontent.flko10-1.fna.fbcdn.net/v/t39.30808-6/329796219_1363543151144558_7339335162674036831_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=2285d6&_nc_ohc=ROiEzHtt-lIQ7kNvgENHunZ&_nc_ht=scontent.flko10-1.fna&_nc_gid=AKbG8a2feuOoV6xD58E13Bx&oh=00_AYB2bjxDTuFXBedQH6dYHGBdYAVwxzHxCj4RsGrv8ujTIw&oe=671C0067"}} />
-    </View>
-
-    <View style={{
-        justifyContent:"center",
-        alignItems:"left",
-        width:responsiveScreenWidth(60),
-        paddingLeft:5
-    }}>
-
-
-
-
-
-
-    <Text style={{
-        fontSize:responsiveScreenFontSize(2),
-        fontWeight:500
-    }}>SmartBot</Text>
-
-
-
-<View>
-    <Text
-    style={{
-        color:"green",
-        fontSize:responsiveScreenFontSize(1.5),
-        fontWeight:500,
-    }}>powered by llama 3</Text>
-</View>
-    </View>
-
-
-    <View style={{
-        width:responsiveScreenWidth(20),
-        justifyContent:"flex-end",
-        flexDirection:"row",
-        alignItems:"center",
-    }}>
-        <IconButton style={{}} icon="dots-vertical"/>
-    </View>
+            <MaterialCommunityIcons
+              name="star-four-points-outline"
+              size={18}
+              color="black"
+            />
+            <Text style={styles.premiumText}>Get Premium</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        
 
 
+        <ScrollView
+          ref={scrollBottom}
+          style={{
+            marginBottom: responsiveScreenHeight(7),
+          }}
+        >
+          {inpFocus ? (
+            <View
+              style={{
+                height: responsiveScreenHeight(80),
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Avatar.Image
+                size={120}
+                style={{backgroundColor:"transparent"}}
+                source={{
+                  uri: "https://cdn.jsdelivr.net/gh/akashmishra-777/PUBLIC_IMAGES/icon.gif",
+                }}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: responsiveScreenHeight(1),
+                backgroundColor: "#DEE8F7",
+                alignSelf: "center",
+                padding: responsiveScreenHeight(1),
+                elevation: 4,
+                borderRadius: 7,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: responsiveScreenFontSize(1.5),
+                  width: responsiveScreenWidth(80),
+                  fontWeight: 500,
+                  textAlign: "center",
+                  color: "black",
+                  fontFamily:"myfont",
+                  letterSpacing:.5,
+                  fontWeight:500
+                }}
+              >
+                Messages are generated by generative AI. Some may be inaccurate
+                or inappropriate.
+              </Text>
+            </View>
+          )}
 
+          {messages.map((data, index) => {
+            if (data.show == "right") {
+              return (
+                <>
+                  <View key={index} style={styles.chatRight}>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: responsiveScreenWidth(3.8),
+                        // fontWeight: "bold",
+                        fontFamily:"myfont",
+                        letterSpacing:.5
+                      }}
+                    >
+                      {data.msg}{" "}
+                    </Text>
 
+                    <Text
+                      style={{
+                        fontSize: responsiveScreenFontSize(1.2),
+                        textAlign: "right",
+                        color: "white",
+                      }}
+                    >
+                      {new Date().toLocaleTimeString("en-US", {
+                        hour12: true,
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </Text>
+                  </View>
+                </>
+              );
+            } else if (data.show == "left") {
+              return (
+                <>
+                  <View style={styles.chatLeft}>
+                    <Text
+                      style={{
+                        color: "black",
+                        fontSize: responsiveScreenWidth(3.75),
+                        // fontWeight: "bold",
+                        fontFamily:"myfont",
+                        letterSpacing:.6
+                      }}
+                    >
+                      {data.msg}
+                    </Text>
 
+                    <Text
+                      style={{
+                        fontSize: responsiveScreenFontSize(1.3),
+                        textAlign: "right",
+                      }}
+                    >
+                      {new Date().toLocaleTimeString("en-US", {
+                        hour12: true,
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </Text>
+                  </View>
+                </>
+              );
+            }
+          })}
+        </ScrollView>
 
+        <View style={[styles.inputView]}>
+          <TouchableOpacity>
+            <IconButton
+              icon="microphone"
+              size={25}
+              style={{
+                marginHorizontal: 0,
+              }}
+            />
+          </TouchableOpacity>
 
-<ScrollView ref={scrollBottom} style={{
-    marginBottom:responsiveScreenHeight(7)
-}}>
-
-
-
-{inpFocus  ?<View style={{
-    height:responsiveScreenHeight(82),
-    justifyContent:"center",
-    alignItems:"center",
-  
-}}>
-    <Avatar.Image size={120} source={{uri:"https://cdn.jsdelivr.net/gh/akashmishra-777/PUBLIC_IMAGES/icon.gif"}} />
-
-
-
-
-</View>:<View style={{
-    flexDirection:"row",
-    justifyContent:"center",
-    alignItems:"center",
-    margin:responsiveScreenHeight(1),
-    backgroundColor:"#DEE8F7",
-    alignSelf:"center",
-    padding:responsiveScreenHeight(1),
-    elevation:4,
-    borderRadius:7
-}}>
-
-    <Text style={{fontSize:responsiveScreenFontSize(1.5),width:responsiveScreenWidth(80),fontWeight:500, textAlign:"center",color:"black"}}>Messages are generated by generative AI. Some may be inaccurate or inappropriate.</Text>
-</View>
-}
-
-
-{
-    messages.map((data,index)=>{
-        if(data.show== "right"){
-            return<>
-            <View key={index}  style={styles.chatRight}>
-            <Text style={{
-               color:"white",
-               fontSize:responsiveScreenWidth(3.8),
-               fontWeight:500
-              
-           
-            }}>{data.msg}   </Text>
-    
-    
-            <Text
+          <TextInput
+            cursorColor={"#648DDB"}
+            placeholder="What's on your mind?"
+            value={msgValue}
+            onFocus={() => setInpFocus(false)}
+            onChangeText={(text) => setMsgValue(text)}
             style={{
-                fontSize:responsiveScreenFontSize(1.2),
-                textAlign:"right",
-                color:"white"
+              fontSize: responsiveScreenFontSize(2),
+              // width:responsiveScreenWidth(70)
+
+              maxWidth: responsiveScreenWidth(70),
+              width: responsiveScreenWidth(70),
+              paddingHorizontal: 10,
+              borderRadius: 20,
+              fontFamily:"myfont",
+              letterSpacing:.5,
+              // fontWeight:"bold"
             }}
-            >{new Date().toLocaleTimeString("en-US",{
-                hour12:true,
-                hour:"2-digit",
-                minute:"2-digit"
-            })}</Text>
-    
-        
-      </View>
-            </>
-        }else if(data.show == "left"){
-            return<>
-            <View style={styles.chatLeft}>
-        <Text style={{
-           color:"black",
-           fontSize:responsiveScreenWidth(3.8),
-           fontWeight:500
-          
-       
-        }}>{data.msg}</Text>
+          />
 
-
-        <Text
-        style={{
-            fontSize:responsiveScreenFontSize(1.3),
-            textAlign:"right"
-        }}
-        >{new Date().toLocaleTimeString("en-US",{
-            hour12:true,
-            hour:"2-digit",
-            minute:"2-digit"
-        })}</Text>
-  
-  </View>
-            </>
-        }  
-    })
-}
-
-</ScrollView>
-
-
-
-
-
-
-
-       
-
-
-
-
-
-<View style={[styles.inputView]}>
-
- 
-   
-
-
-    <TouchableOpacity>
-    <IconButton  icon="microphone" size={25}  
-     style={{
-        marginHorizontal:0,
-        
-    }}
-    />
-    </TouchableOpacity>
-
-
-   
-  
-
-    <TextInput
-    cursorColor={"#648DDB"}
-     placeholder="What's on your mind?"
-     value={msgValue}
-     onFocus={()=>setInpFocus(false)}
-     onChangeText={(text)=>setMsgValue(text)}
-     style={{
-        fontSize:responsiveScreenFontSize(2),
-        // width:responsiveScreenWidth(70)
-
-        maxWidth:responsiveScreenWidth(70),
-        width:responsiveScreenWidth(70),
-        paddingHorizontal:10,
-        borderRadius:20
-
-     }}     />
-
-
-
-<TouchableOpacity onPress={sendHandler}>
-    <IconButton  icon="send" size={23}  style={{
-        color:"white"
-    }} 
-    />
-    </TouchableOpacity>
-      </View>
-
-
-
-    </SafeAreaView>
+          <TouchableOpacity onPress={sendHandler}>
+            <IconButton
+              icon="send"
+              size={23}
+              style={{
+                color: "white",
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     </>
-
-
-  
+  );
 }
-
-
-
 
 const styles = StyleSheet.create({
-    mainContainer:{
-        height:"100%",
-        backgroundColor:"white",
-        
-    },
-    inputView:{
-        backgroundColor:"white",
-        elevation:4,
-        width:responsiveScreenWidth(100),
-        position:"absolute",
-        bottom:1,
-        flex:1,
-        flexDirection:"row",
-        justifyContent:"space-evenly",
-        borderTopWidth:1,
-        borderColor:"#EEEEEE",
-
-     
-  
-    },header:{
-        height:responsiveScreenHeight(6),
-        backgroundColor:"white",
-        elevation:4,
-        flexDirection:"row",
-
-    },chatLeft:{
-        backgroundColor:"#EEEEEE",
-        padding:10,
-        width:"auto",
-        marginHorizontal:10,
-        marginVertical:5,
-        borderBottomLeftRadius:10,
-        borderTopRightRadius:10,
-        borderBottomRightRadius:10,
-        elevation:2,
-        alignSelf:"flex-start",
-        maxWidth:responsiveScreenWidth(90)
-    },
-    chatRight:{
-        backgroundColor:"#648DDB",
-        padding:10,
-        width:"auto",
-        marginHorizontal:10,
-        marginVertical:5,
-        borderTopLeftRadius:10,
-        borderTopRightRadius:10,
-        borderBottomLeftRadius:10,
-        elevation:4,
-        alignSelf:"flex-end",
-        maxWidth:responsiveScreenWidth(90)
-    }
-})
+  mainContainer: {
+    height: "100%",
+    backgroundColor: "white",
+  },
+  inputView: {
+    backgroundColor: "white",
+    elevation: 4,
+    width: responsiveScreenWidth(100),
+    position: "absolute",
+    bottom: 1,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    borderTopWidth: 1,
+    borderColor: "#EEEEEE",
+  },
+  header: {
+    height: responsiveScreenHeight(6),
+    backgroundColor: "white",
+    elevation: 4,
+    flexDirection: "row",
+  },
+  chatLeft: {
+    backgroundColor: "#EEEEEE",
+    padding: 10,
+    width: "auto",
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderBottomLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    elevation: 2,
+    alignSelf: "flex-start",
+    maxWidth: responsiveScreenWidth(90),
+  },
+  chatRight: {
+    backgroundColor: "#648DDB",
+    padding: 10,
+    width: "auto",
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    elevation: 4,
+    alignSelf: "flex-end",
+    maxWidth: responsiveScreenWidth(90),
+  },
+  premium: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: responsiveScreenHeight(1),
+  },
+  premiumText: {
+   
+    fontFamily: "myfont",
+    letterSpacing: 0.5,
+    fontWeight: "bold",
+  },
+});
