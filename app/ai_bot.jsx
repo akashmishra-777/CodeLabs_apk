@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Image,
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,12 +15,10 @@ import {
 } from "react-native-responsive-dimensions";
 import { IconButton, Avatar } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 
 export default function ai_bot() {
-  const router = useRouter();
   const [messages, setMessages] = useState([]);
   const [msgValue, setMsgValue] = useState("");
   const scrollBottom = useRef(null);
@@ -45,6 +42,9 @@ export default function ai_bot() {
           msg: msgValue,
         }
       );
+
+      
+      
 
       if (data) {
         setMessages((previous) => [
@@ -150,7 +150,7 @@ export default function ai_bot() {
             if (data.show == "right") {
               return (
                 <>
-                  <View key={index} style={styles.chatRight}>
+                  <View key={data.message} style={styles.chatRight}>
                     <Text
                       style={{
                         color: "white",
@@ -182,7 +182,7 @@ export default function ai_bot() {
             } else if (data.show == "left") {
               return (
                 <>
-                  <View style={styles.chatLeft}>
+                  <View style={styles.chatLeft} key={data.message}>
                     <Text
                       style={{
                         color: "black",

@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React,{useState} from "react";
-import { View, Text, StyleSheet,TextInput } from "react-native";
+import { View, StyleSheet,TextInput } from "react-native";
 import { responsiveScreenFontSize, responsiveScreenWidth } from "react-native-responsive-dimensions";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -8,7 +8,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
-import { useStoreRootState } from "expo-router/build/global-state/router-store";
+
 
 // import { Container } from './styles';
 
@@ -85,7 +85,7 @@ const mainChat = () => {
         />
 
     <TouchableOpacity style={{
-        width:responsiveScreenWidth(7),
+        width:responsiveScreenWidth(8.5),
         paddingLeft:responsiveScreenWidth(1)
     }}>
         <Ionicons name="send" size={24} color="#09334E" />

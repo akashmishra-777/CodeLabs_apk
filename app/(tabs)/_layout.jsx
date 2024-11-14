@@ -16,6 +16,8 @@ import socketService from "../socketService/socketService";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { useFonts } from "expo-font";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
 
 export default function Layout() {
   const [loaded] = useFonts({
@@ -36,15 +38,10 @@ export default function Layout() {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <Tabs
         screenOptions={{
-          headerTitle: () => (
-            <Text style={styles.logoPartOne}>
-              Code<Text style={styles.logoPartTwo}>Labs</Text>
-            </Text>
-          ),
-          headerRight: () => <Logo />,
+         
           tabBarShowLabel: false,
           tabBarActiveTintColor: "#09334E",
           tabBarStyle: {
@@ -57,6 +54,12 @@ export default function Layout() {
         <Tabs.Screen
           name="index"
           options={{
+            headerTitle: () => (
+              <Text style={styles.logoPartOne}>
+                Code<Text style={styles.logoPartTwo}>Labs</Text>
+              </Text>
+            ),
+            headerRight: () => <Logo />,
             tabBarIcon: ({ size, color, focused }) => (
               <Ionicons
                 name="home"
@@ -87,6 +90,8 @@ export default function Layout() {
         <Tabs.Screen
           name="Shorts"
           options={{
+           
+            headerShown:false,
             tabBarIcon: ({ size, color, focused }) => (
               <Entypo
                 name="folder-video"
@@ -117,6 +122,7 @@ export default function Layout() {
         <Tabs.Screen
           name="Posts"
           options={{
+            headerTitle:()=><Text style={{fontSize:responsiveFontSize(2.9),fontWeight:"bold"}}><Text style={{color:"#648DDB"}}>Up</Text>load</Text>,
             tabBarIcon: ({ size, color, focused }) => (
               <FontAwesome6
                 name="plus"
@@ -178,7 +184,9 @@ export default function Layout() {
         <Tabs.Screen
           name="Profile"
           options={{
-            tabBarIcon: ({ size, color, focused }) => (
+              title:"manu123212",
+              headerRight:()=><ProfileRightHeader/>,
+              tabBarIcon: ({ size, color, focused }) => (
               <MaterialProIcons
                 name="shield-account"
                 color={color}
@@ -189,6 +197,8 @@ export default function Layout() {
                   paddingVertical: 3,
                   borderRadius: 20,
                 }}
+                
+                
               />
             ),
             tabBarLabel: () => (
@@ -260,3 +270,23 @@ const Logo = function () {
     </>
   );
 };
+
+
+
+
+function ProfileRightHeader(){
+  return<>
+  <View style={{marginRight:responsiveScreenWidth(3),alignItems:"center",flexDirection:"row"}}>
+
+    <TouchableOpacity>
+      <FontAwesome name="search" style={{marginRight:responsiveScreenWidth(7)}} size={responsiveScreenHeight(2.95)} color="#09334E" />
+    </TouchableOpacity>
+
+
+   <TouchableOpacity>
+   <Ionicons name="settings" size={responsiveScreenHeight(3)} color="#09334E" />
+   </TouchableOpacity>
+
+  </View>
+  </>
+}

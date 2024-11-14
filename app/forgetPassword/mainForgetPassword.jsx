@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import { View,Text,TouchableOpacity,StyleSheet,Button } from 'react-native'
+import React,{useState} from 'react'
+import { View,Text,TouchableOpacity,StyleSheet } from 'react-native'
 import { responsiveFontSize,responsiveScreenHeight,responsiveScreenWidth } from 'react-native-responsive-dimensions'    
 import { TextInput,ActivityIndicator} from 'react-native-paper'
 import {SafeAreaView} from 'react-native-safe-area-context'

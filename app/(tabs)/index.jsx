@@ -1,5 +1,5 @@
 import { TouchableOpacity } from "react-native";
-import { View, Text, StyleSheet,Image,FlatList } from "react-native";
+import { View, Text, StyleSheet,FlatList } from "react-native";
 import { Avatar, Icon, Card } from "react-native-paper";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
@@ -9,10 +9,10 @@ import {
   responsiveScreenWidth,
 } from "react-native-responsive-dimensions";
 import PostLoading from "../loading/loadingPost";
-import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
 
 
 
@@ -20,28 +20,44 @@ import { useFonts } from "expo-font";
 export default function index() {
 
   const [postDataState,setPostData] = useState([]);
+  const [isRefreshing,setRefreshing] = useState(false);
+  const [mainApiCallTrack,setMainApiCallTrack] = useState(false);
+
+
+  async function apiCall(){
+    setMainApiCallTrack(false)
+    try {
+      const postData = await axios.post("https://codelabs-server-sp7w.onrender.com/posts/getPublicPost")
+      setPostData(postData.data.posts);
+      setMainApiCallTrack(true)
+    } catch (error) {
+      console.warn("Error while fetching data");
+      setTimeout(()=>{
+        setRefreshing(false)
+      },1500)
+      
+    }
+  }
   
 
   useEffect(()=>{
-
-
-    async function apiCall(){
-      try {
-        const postData = await axios.post("https://codelabs-server-sp7w.onrender.com/posts/getPublicPost")
-
-        setPostData(postData.data.posts);
-
-    
-        
-        
-        
-      } catch (error) {
-        console.warn("Error while fetching data");
-        
-      }
-    }
     apiCall()
   },[])
+
+
+  function onRefresh(){
+    setRefreshing(true)
+    apiCall()
+    if(mainApiCallTrack){
+      setTimeout(() => {
+        setRefreshing(false)
+      }, 1500);
+    }else{
+      setTimeout(()=>{
+        setRefreshing(false)
+      },6000)
+    }
+  }
 
 
  
@@ -58,9 +74,11 @@ export default function index() {
       >
 
   
-        <PostLoading />
-       {/* {postDataState.length == 0?<PostLoading/>:
+
+       {postDataState.length == 0?<PostLoading/>:
         <FlatList
+        refreshing={isRefreshing}
+        onRefresh={onRefresh}
         style={styles.flatStyle} 
         data={postDataState}
         renderItem={({item})=>{
@@ -75,7 +93,7 @@ export default function index() {
            
             </>
         }}
-         />} */}
+         />}
 
 
       </View>
@@ -140,7 +158,7 @@ function Posts({description,postMedia,likesCount,commentsCount}){
 
 
   return <>
-  
+  <StatusBar style="dark"/>
   <View style={styles.card}>
             <View style={styles.headOfPost}>
               <View style={styles.headInternalView1}>
@@ -170,7 +188,7 @@ function Posts({description,postMedia,likesCount,commentsCount}){
                         
                       }}
                     >
-                      Chaman Chutiya {""}
+                      Simran Goswami {""}
                     </Text>
                     {/* Blue tick icon */}
                     <Icon source={"check-decagram"} size={17} color="#648DDB" />
@@ -328,7 +346,7 @@ function Posts({description,postMedia,likesCount,commentsCount}){
 
               <Text style={{ color: "#606770",fontFamily:"myfont",letterSpacing:.7 }}>5 seconds ago</Text>
             </View>
-          </View>
+</View>
   </>
 }
 
