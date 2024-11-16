@@ -2,27 +2,21 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { View, Text, StyleSheet,FlatList } from "react-native";
 import {
- 
   responsiveScreenFontSize,
   responsiveScreenHeight,
   responsiveScreenWidth,
 } from "react-native-responsive-dimensions";
 import { Avatar,Badge  } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
-import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
 
 
 const index = () => {
-  const [loaded] = useFonts({
-    myfont: require("../../assets/fonts/SF-Pro.ttf"),
-  });
+ 
 
   const [messagesPressed, setMessagesPressed] = useState(true);
 
-  if (!loaded) {
-    return null;
-  }
+  
 
   const data = [1,2,3,4,5]
 
@@ -41,7 +35,6 @@ const index = () => {
             >
               <Text
                 style={{
-                  fontFamily: "myfont",
                   color: messagesPressed ? "white" : "black",
                   letterSpacing: 0.5,
                 }}
@@ -62,7 +55,7 @@ const index = () => {
             >
               <Text
                 style={{
-                  fontFamily: "myfont",
+                  
                   letterSpacing:.5,
                   color: messagesPressed ? "black" : "white",
                 }}
@@ -169,13 +162,7 @@ function Individual({data}){
 
   const router = useRouter()
 
-  const [loaded] = useFonts({
-    myfont: require("../../assets/fonts/SF-Pro.ttf"),
-  });
 
-  if (!loaded) {
-    return null;
-  }
 
 
   return<>
@@ -203,19 +190,19 @@ function Individual({data}){
             <View style={{ justifyContent: "center" }}>
               <Text
                 style={{
-                  fontFamily: "myfont",
+                 
                 
-                  fontSize: responsiveScreenFontSize(2.2),
+                  fontSize: responsiveScreenFontSize(2),
                 }}
               >
                 AI ChatBot
               </Text>
               <Text
                 style={{
-                  fontFamily: "myfont",
+                 
                   color: "#606770",
-                  fontSize: responsiveScreenFontSize(2),
-                  marginTop: responsiveScreenHeight(-0.8),
+                  fontSize: responsiveScreenFontSize(1.9),
+                  marginTop: responsiveScreenHeight(-.15),
                   letterSpacing:.5
                 }}
               >
@@ -230,9 +217,9 @@ function Individual({data}){
             <View>
               <Text
                 style={{
-                  fontFamily: "myfont",
+                  
                   color: "#52CD60",
-                  fontWeight:"bold",
+                  fontWeight:"500",
                   fontSize: responsiveScreenFontSize(1.7),
                   marginTop:4
                 }}
@@ -248,7 +235,7 @@ function Individual({data}){
             
           }}
           >
-            <Text style={{fontWeight:"bold"}}>23</Text>
+            <Text style={{fontWeight:"500"}}>23</Text>
           </Badge>
 
 
@@ -265,7 +252,7 @@ function Individual({data}){
 
   <FlatList 
         data={data}
-        renderItem={({item,index})=>{
+        renderItem={()=>{
           return<>
          
           <TouchableOpacity onPress={()=>{
@@ -290,20 +277,17 @@ function Individual({data}){
 
             <View style={{ justifyContent: "center" }}>
               <Text
-                style={{
-                  fontFamily: "myfont",
-                  
-                  fontSize: responsiveScreenFontSize(2.2),
+                style={{  
+                  fontSize: responsiveScreenFontSize(2),
                 }}
               >
                 Chaman Chutiya
               </Text>
               <Text
                 style={{
-                  fontFamily: "myfont",
                   color: "#606770",
-                  fontSize: responsiveScreenFontSize(2),
-                  marginTop: responsiveScreenHeight(-0.8),
+                  fontSize: responsiveScreenFontSize(1.95),
+                  marginTop: responsiveScreenHeight(-0.15),
                 }}
               >
                 Aur ho kaa haal ba ?
@@ -317,7 +301,6 @@ function Individual({data}){
             <View>
               <Text
                 style={{
-                  fontFamily: "myfont",
                   color: "#606770",
                   fontSize: responsiveScreenFontSize(1.7),
                 }}
@@ -333,7 +316,7 @@ function Individual({data}){
             
           }}
           >
-            <Text style={{fontWeight:"bold"}}>23</Text>
+            <Text style={{fontWeight:"500"}}>23</Text>
           </Badge>
 
 
@@ -385,7 +368,6 @@ function Groups({data}){
             <View style={{ justifyContent: "center" }}>
               <Text
                 style={{
-                  fontFamily: "myfont",
                   fontSize: responsiveScreenFontSize(2.1),
                 }}
               >
@@ -393,7 +375,6 @@ function Groups({data}){
               </Text>
               <Text
                 style={{
-                  fontFamily: "myfont",
                   color: "#606770",
                   fontSize: responsiveScreenFontSize(2),
                   marginTop: responsiveScreenHeight(-0.8),
@@ -410,7 +391,6 @@ function Groups({data}){
             <View>
               <Text
                 style={{
-                  fontFamily: "myfont",
                   color: "#606770",
                   fontSize: responsiveScreenFontSize(1.7),
                 }}
@@ -426,7 +406,7 @@ function Groups({data}){
             
           }}
           >
-            <Text style={{fontWeight:"bold"}}>23</Text>
+            <Text style={{fontWeight:"500"}}>23</Text>
           </Badge>
 
 

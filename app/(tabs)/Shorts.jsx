@@ -12,8 +12,7 @@ import {
   responsiveScreenHeight,
   responsiveScreenWidth,
 } from "react-native-responsive-dimensions";
-
-import Octicons from '@expo/vector-icons/Octicons';
+;
 
 import Feather from '@expo/vector-icons/Feather';
 
@@ -21,7 +20,8 @@ import { Avatar } from "react-native-paper";
 
 import { Video, ResizeMode } from "expo-av";
 
-import { useCallback, useEffect, useState } from "react";
+import {useState } from "react";
+
 
 import { StatusBar } from "expo-status-bar";
 
@@ -35,22 +35,30 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { useFocusEffect } from "expo-router";
 
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 export default function Shorts() {
   const [isSelected, setIsSelected] = useState(false);
   const [showDescription,setShowDescription] = useState(false)
   const [muteUnmute,setMuteUnmute] = useState(false)
+  const [statutsBarColor,setStatusBarColor] = useState("white")
 
 useFocusEffect(()=>{
   setMuteUnmute(false)
+  setStatusBarColor("white")
   return ()=>{
     setMuteUnmute(true)
+    setStatusBarColor("white")
   }
 })
 
+
+
   return (
     <>
-      <StatusBar backgroundColor="white" style="dark" />
+      <StatusBar style={statutsBarColor == "white"?"dark":"light"} backgroundColor={statutsBarColor=="white"?"white":"black"} />
+      <SafeAreaView >
       <FlatList
         data={[
           {
@@ -87,7 +95,7 @@ useFocusEffect(()=>{
                   style={{
                     width: responsiveScreenWidth(100),
                     height: responsiveHeight(100),
-                    marginBottom: responsiveScreenHeight(7),
+                    marginBottom: responsiveScreenHeight(12),
                   }}
                   resizeMode={ResizeMode.CONTAIN}
                 />
@@ -141,8 +149,9 @@ useFocusEffect(()=>{
                           numberOfLines={1}
                           style={{
                             color: "white",
-                            fontWeight: "bold",
+                            fontWeight: "400",
                             fontSize: responsiveScreenFontSize(1.95),
+                            
                           }}
                         >
                           eagle_akash_mishra
@@ -152,7 +161,7 @@ useFocusEffect(()=>{
                           style={{
                             flexDirection: "row",
                             gap: responsiveScreenWidth(0.5),
-                            justifyContent: "center",
+                            justifyContent: "flex-start",
                             alignItems: "center",
                             marginLeft: responsiveScreenWidth(-0.8),
                           }}
@@ -166,11 +175,14 @@ useFocusEffect(()=>{
                             numberOfLines={1}
                             style={{
                               color: "white",
+                              textAlign:"left",
                               fontSize: responsiveScreenFontSize(1.6),
                               maxWidth: responsiveScreenWidth(50),
+                              
+                              
                             }}
                           >
-                            Tohare karanwa ye raja ji hum gaili pitaai aaj ho
+                            Default sound
                           </Text>
                         </View>
 
@@ -184,8 +196,8 @@ useFocusEffect(()=>{
 
                     <View style={{flexDirection:"row",gap:responsiveScreenWidth(4),alignItems:"center"}}>
 
-                    <TouchableOpacity style={{backgroundColor:"transparent",paddingHorizontal:responsiveScreenWidth(3.5),paddingVertical:responsiveScreenHeight(.9),borderRadius:7,borderWidth:1.5,borderColor:"white",marginRight:responsiveScreenWidth(2)}}>
-                          <Text style={{color:"white",fontWeight:"bold",fontSize:responsiveScreenFontSize(1.8)}}>Follow</Text>
+                    <TouchableOpacity style={{backgroundColor:"transparent",paddingHorizontal:responsiveScreenWidth(3.5),paddingVertical:responsiveScreenHeight(.5),borderRadius:7,borderWidth:1.5,borderColor:"white",marginRight:responsiveScreenWidth(2)}}>
+                          <Text style={{color:"white",fontWeight:"500",fontSize:responsiveScreenFontSize(1.8)}}>Follow</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -198,7 +210,7 @@ useFocusEffect(()=>{
                             <TouchableOpacity onPress={()=>{
                               setShowDescription(!showDescription)
                             }}>
-                            <Text numberOfLines={showDescription?3:1} style={{color:"darkgrey",paddingHorizontal:responsiveScreenWidth(1.5),maxWidth:responsiveScreenWidth(93),paddingBottom:showDescription?responsiveScreenHeight(1):0,fontSize:responsiveScreenFontSize(1.75)}}>Let's see how to kill a man at night in a proper way!</Text>
+                            <Text numberOfLines={showDescription?3:1} style={{color:"#DDD",paddingHorizontal:responsiveScreenWidth(1.5),maxWidth:responsiveScreenWidth(93),paddingBottom:showDescription?responsiveScreenHeight(1):0,fontSize:responsiveScreenFontSize(1.75)}}>Let's see how to kill a man at night in a proper way!</Text>
                             </TouchableOpacity>
                   </View>
 
@@ -212,18 +224,18 @@ useFocusEffect(()=>{
 
                 <TouchableOpacity style={{justifyContent:"center",alignItems:"center"}}>
                 <FontAwesome name="heart-o" size={responsiveScreenHeight(3.5)} color="white" />
-                <Text style={{color:"white",fontSize:responsiveScreenFontSize(1.5),fontWeight:"bold"}}>268K</Text>
+                <Text style={{color:"white",fontSize:responsiveScreenFontSize(1.5),fontWeight:"500"}}>268K</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{justifyContent:"center",alignItems:"center"}}>
                    <Feather name="message-circle" size={responsiveScreenHeight(3.7)} color="white" />
-                   <Text style={{color:"white",fontSize:responsiveScreenFontSize(1.6),fontWeight:"bold"}}>23K</Text>
+                   <Text style={{color:"white",fontSize:responsiveScreenFontSize(1.6),fontWeight:"500"}}>23K</Text>
                 </TouchableOpacity>
 
 
                 <TouchableOpacity style={{justifyContent:"center",alignItems:"center"}}>
                 <Feather name="send"  size={responsiveScreenHeight(3.2)} color="white" />
-                   <Text style={{color:"white",fontSize:responsiveScreenFontSize(1.6),fontWeight:"bold"}}>23K</Text>
+                   <Text style={{color:"white",fontSize:responsiveScreenFontSize(1.6),fontWeight:"500"}}>23K</Text>
                 </TouchableOpacity>
 
 
@@ -260,6 +272,7 @@ useFocusEffect(()=>{
         }}
         
       />
+      </SafeAreaView>
     </>
   );
 }
@@ -277,8 +290,8 @@ const styles = new StyleSheet.create({
   },
   bottomDesign: {
     position: "absolute",
-    bottom: 10,
-    marginBottom: responsiveScreenHeight(8),
+    bottom: responsiveScreenHeight(3.5),
+    marginBottom: responsiveScreenHeight(12),
     height: responsiveScreenHeight(13),
     width: responsiveScreenWidth(100),
     paddingHorizontal: responsiveScreenWidth(2),
@@ -288,7 +301,7 @@ const styles = new StyleSheet.create({
   engagement: {
     position: "absolute",
     backgroundColor:"transparent",
-    bottom:responsiveScreenHeight(22),
+    bottom:responsiveScreenHeight(28),
     right:0,
     height:responsiveHeight(50),
     width:responsiveScreenWidth(20),

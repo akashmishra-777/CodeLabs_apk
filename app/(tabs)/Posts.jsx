@@ -4,7 +4,7 @@ import {
   responsiveScreenFontSize,
   responsiveScreenHeight,
   responsiveScreenWidth,
-  responsiveWidth,
+ 
 } from "react-native-responsive-dimensions";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { Switch } from "react-native-paper";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { useFonts } from "expo-font";
 import Feather from '@expo/vector-icons/Feather';
 
 export default function Post() {
@@ -23,12 +23,16 @@ export default function Post() {
   const [isDownloadable, setIsDownloadable] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
 
+
+
+ 
+
   return (
     <>
-      <ScrollView style={{paddingBottom:responsiveScreenHeight(10)}}>
+      <ScrollView >
         <View style={styles.main}>
           <View style={styles.select}>
-            <Text style={[styles.head, { color: "#4c669f" }]}>Add Media</Text>
+            <Text style={[styles.head, { color: "#4c669f", }]}>Add Media</Text>
           </View>
 
           <TouchableOpacity>
@@ -38,18 +42,19 @@ export default function Post() {
                 size={responsiveScreenHeight(4)}
                 color="#4c669f"
               />
-              <Text style={{ fontSize: responsiveScreenFontSize(2.3),fontWeight:"bold" }}>
+              <Text style={{ fontSize: responsiveScreenFontSize(2.3),fontWeight:"400", }}>
                 Upload your media
               </Text>
               <Text
                 style={{
                   fontSize: responsiveScreenFontSize(1.8),
                   color: "#606770",
-                  fontWeight:"bold"
+                  fontWeight:"400",
+                  
                 }}
               >
                 Just tap here to{" "}
-                <Text style={{ color: "#4c669f", fontWeight: "bold" }}>
+                <Text style={{ color: "#4c669f", fontWeight: "bold", }}>
                   Browse
                 </Text>{" "}
                 your gallery
@@ -58,7 +63,8 @@ export default function Post() {
                 style={{
                   fontSize: responsiveScreenFontSize(1.8),
                   color: "#606770",
-                  fontWeight:"bold"
+                  fontWeight:"400",
+                  
                 }}
               >
                 to upload media
@@ -67,7 +73,7 @@ export default function Post() {
           </TouchableOpacity>
 
           <View style={styles.select}>
-            <Text style={[styles.head, { color: "#4c669f" }]}>Description</Text>
+            <Text style={[styles.head, { color: "#4c669f", }]}>Description</Text>
           </View>
 
           <View>
@@ -79,7 +85,7 @@ export default function Post() {
               numberOfLines={4}
               style={[
                 styles.description,
-                { borderColor: inputFocused ? "#4c669f" : "#DDD",fontWeight:"bold" },
+                { borderColor: inputFocused ? "#4c669f" : "#DDD",fontWeight:"400", },
               ]}
               
               placeholder="Write the description of the post here."
@@ -90,6 +96,7 @@ export default function Post() {
                 textAlign: "right",
                 paddingRight: responsiveScreenWidth(4),
                 color: "#606770",
+              
               }}
             >
               0/150
@@ -177,6 +184,7 @@ export default function Post() {
           <View
             style={{
               marginHorizontal: responsiveScreenWidth(3),
+              height:responsiveScreenHeight(6),
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
@@ -188,6 +196,7 @@ export default function Post() {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: responsiveScreenWidth(1),
+                
               }}
             >
               <MaterialIcons
@@ -195,7 +204,7 @@ export default function Post() {
                 size={responsiveScreenWidth(6.3)}
                 color="#606770"
               />
-              <Text style={{ fontWeight: "bold", color: "#606770" }}>
+              <Text style={{ fontWeight: "500", color: "#606770" }}>
                 Keep it private
               </Text>
             </View>
@@ -212,6 +221,7 @@ export default function Post() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+               height:responsiveScreenHeight(6),
             }}
           >
             <View
@@ -228,7 +238,7 @@ export default function Post() {
                 color="#606770"
               />
 
-              <Text style={{ fontWeight: "bold", color: "#606770" }}>
+              <Text style={{ fontWeight: "500", color: "#606770" }}>
                 Hide likes count
               </Text>
             </View>
@@ -245,6 +255,7 @@ export default function Post() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+               height:responsiveScreenHeight(6),
             }}
           >
             <View
@@ -260,7 +271,7 @@ export default function Post() {
                 size={responsiveScreenWidth(5.8)}
                 color="#606770"
               />
-              <Text style={{ fontWeight: "bold", color: "#606770" }}>
+              <Text style={{ fontWeight: "500", color: "#606770" }}>
                 Disable comments
               </Text>
             </View>
@@ -277,6 +288,7 @@ export default function Post() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+               height:responsiveScreenHeight(6),
             }}
           >
             <View
@@ -292,7 +304,7 @@ export default function Post() {
                 size={responsiveScreenWidth(6.5)}
                 color="#606770"
               />
-              <Text style={{ fontWeight: "bold", color: "#606770" }}>
+              <Text style={{ fontWeight: "500", color: "#606770" }}>
                 Disable sharing
               </Text>
             </View>
@@ -309,6 +321,7 @@ export default function Post() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+               height:responsiveScreenHeight(6),
             }}
           >
             <View
@@ -324,7 +337,7 @@ export default function Post() {
                 size={responsiveScreenWidth(6.5)}
                 color="#606770"
               />
-              <Text style={{ fontWeight: "bold", color: "#606770" }}>
+              <Text style={{ fontWeight: "500", color: "#606770" }}>
                 Disable downloading
               </Text>
             </View>
@@ -357,7 +370,7 @@ export default function Post() {
                 size={responsiveScreenWidth(6)}
                 color="#606770"
               />
-              <Text style={{ fontWeight: "bold", color: "#606770" }}>
+              <Text style={{ fontWeight: "500", color: "#606770" }}>
                 Boost my post
               </Text>
             </View>
@@ -380,7 +393,8 @@ export default function Post() {
                   style={{
                     paddingBottom: 2,
                     color: "#DDD",
-                    fontWeight: "bold",
+                    fontWeight: "500",
+                  
                   }}
                 >
                   299/-
@@ -403,9 +417,9 @@ export default function Post() {
                   style={{
                     paddingBottom: 2,
                     color: "#DDD",
-                    fontWeight: "bold",
+                    fontWeight: "500",
                     textAlign:"center",
-                  
+                
                   }}
                 >
                   Create Post
@@ -435,7 +449,7 @@ const styles = new StyleSheet.create({
   },
   head: {
     fontSize: responsiveScreenFontSize(1.9),
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   imageArea: {
     backgroundColor: "white",

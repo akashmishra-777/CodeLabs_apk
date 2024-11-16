@@ -11,7 +11,6 @@ import {
 import PostLoading from "../loading/loadingPost";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 
 
@@ -147,14 +146,6 @@ const styles = new StyleSheet.create({
 
 function Posts({description,postMedia,likesCount,commentsCount}){
 
-  const [loaded] = useFonts({
-    myfont:require("../../assets/fonts/SF-Pro.ttf")
-  })
-
-  if(!loaded){
-    return null;
-
-  }
 
 
   return <>
@@ -180,10 +171,10 @@ function Posts({description,postMedia,likesCount,commentsCount}){
                   >
                     <Text
                       style={{
-                        fontWeight: "bold",
+                        fontWeight: "500",
                         color: "#09334E",
                         fontSize: responsiveFontSize(1.8),
-                        fontFamily:"myfont",
+                        
                         letterSpacing:.5
                         
                       }}
@@ -200,7 +191,7 @@ function Posts({description,postMedia,likesCount,commentsCount}){
                       fontWeight: "400",
                       color: "#606770",
                       fontSize: responsiveFontSize(1.76),
-                      fontFamily:"myfont",
+                      
                       letterSpacing:1,
                       marginTop:responsiveScreenHeight(-.4)
                     }}
@@ -224,7 +215,7 @@ function Posts({description,postMedia,likesCount,commentsCount}){
               }}
             >
               <Text
-                style={{ fontSize: responsiveFontSize(1.9), color: "black",fontFamily:"myfont",letterSpacing:.7}}
+                style={{ fontSize: responsiveFontSize(1.9), color: "dark",letterSpacing:.7,fontWeight:"400"}}
                 numberOfLines={5}
               >
                 {description} 
@@ -259,8 +250,8 @@ function Posts({description,postMedia,likesCount,commentsCount}){
                       style={{
                         
                         fontSize: responsiveFontSize(1.8),
-                        fontFamily:"myfont",
-                        letterSpacing:1
+                        letterSpacing:1,
+                        fontWeight:"400"
                        
                       }}
                     >
@@ -290,8 +281,8 @@ function Posts({description,postMedia,likesCount,commentsCount}){
                       style={{
                        
                         fontSize: responsiveFontSize(1.8),
-                        fontFamily:"myfont",
-                      letterSpacing:1
+                      letterSpacing:1,
+                      fontWeight:"400"
                         
                       }}
                     >
@@ -340,11 +331,11 @@ function Posts({description,postMedia,likesCount,commentsCount}){
               }}
             >
               <TouchableOpacity>
-                <Text style={{ color: "#606770",fontFamily:"myfont",
+                <Text style={{ color: "#606770",
                     letterSpacing:.5 }}>View all the comments</Text>
               </TouchableOpacity>
 
-              <Text style={{ color: "#606770",fontFamily:"myfont",letterSpacing:.7 }}>5 seconds ago</Text>
+              <Text style={{ color: "#606770",letterSpacing:.7 }}>5 seconds ago</Text>
             </View>
 </View>
   </>

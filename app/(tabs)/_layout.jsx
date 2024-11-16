@@ -15,14 +15,11 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import socketService from "../socketService/socketService";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { useFonts } from "expo-font";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 
 export default function Layout() {
-  const [loaded] = useFonts({
-    myfont: require("../../assets/fonts/SF-Pro.ttf"),
-  });
+  
 
   useEffect(() => {
     socketService.connect("http://192.168.108.162:8000/");
@@ -32,9 +29,7 @@ export default function Layout() {
     };
   }, []);
 
-  if (!loaded) {
-    return null;
-  }
+ 
 
   return (
     <>
@@ -76,7 +71,7 @@ export default function Layout() {
             tabBarLabel: () => (
               <Text
                 style={{
-                  fontFamily: "myfont",
+                
                   fontWeight: "bold",
                   fontSize: responsiveFontSize(1.6),
                 }}
@@ -108,7 +103,7 @@ export default function Layout() {
             tabBarLabel: () => (
               <Text
                 style={{
-                  fontFamily: "myfont",
+                
                   fontWeight: "bold",
                   fontSize: responsiveFontSize(1.6),
                 }}
@@ -139,7 +134,7 @@ export default function Layout() {
             tabBarLabel: () => (
               <Text
                 style={{
-                  fontFamily: "myfont",
+                
                   fontWeight: "bold",
                   fontSize: responsiveFontSize(1.6),
                 }}
@@ -152,7 +147,7 @@ export default function Layout() {
         />
 
         <Tabs.Screen
-          name="Library"
+          name="Courses"
           options={{
             tabBarIcon: ({ size, color, focused }) => (
               <Entypo
@@ -170,7 +165,7 @@ export default function Layout() {
             tabBarLabel: () => (
               <Text
                 style={{
-                  fontFamily: "myfont",
+                
                   fontWeight: "bold",
                   fontSize: responsiveFontSize(1.6),
                 }}
@@ -204,7 +199,7 @@ export default function Layout() {
             tabBarLabel: () => (
               <Text
                 style={{
-                  fontFamily: "myfont",
+                
                   fontWeight: "bold",
                   fontSize: responsiveFontSize(1.6),
                 }}
@@ -223,13 +218,13 @@ const styles = new StyleSheet.create({
   logoPartOne: {
     fontSize: responsiveFontSize(2.8),
     fontWeight: "bold",
-    fontFamily: "myfont",
+  
   },
   logoPartTwo: {
     fontSize: responsiveFontSize(2.8),
     fontWeight: "bold",
     color: "#648DDB",
-    fontFamily: "myfont",
+  
   },
 });
 

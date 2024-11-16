@@ -1,28 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import React,{useState} from "react";
 import { View, StyleSheet,TextInput } from "react-native";
-import { responsiveScreenFontSize, responsiveScreenWidth } from "react-native-responsive-dimensions";
+import { responsiveScreenFontSize, responsiveScreenHeight, responsiveScreenWidth } from "react-native-responsive-dimensions";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native";
-import { useFonts } from "expo-font";
+
 
 
 // import { Container } from './styles';
 
 const mainChat = () => {
 
-    const [loaded]  = useFonts({
-        myfonts:require("../../assets/fonts/SF-Pro.ttf")
-    })
+   
 
     const [inputFocused,setInputFocused] = useState(false)
 
-    if(!loaded){
-        return null;
-    }
 
 
   return (
@@ -64,7 +59,7 @@ const mainChat = () => {
         placeholder="Type a message..."
         cursorColor={"#09334E"}
         style={{
-            fontFamily:"myfont",
+            
             letterSpacing:.8,
             fontSize:responsiveScreenFontSize(2),
             backgroundColor:"#EEE",
@@ -106,7 +101,7 @@ const styles = new StyleSheet.create({
     backgroundColor: "white",
     width: responsiveScreenWidth(100),
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: responsiveScreenHeight(.7),
     flexDirection: "row",
     justifyContent:"space-around",
     alignItems:"center"

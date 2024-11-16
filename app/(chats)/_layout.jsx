@@ -8,7 +8,7 @@ import {
 import Iconb from 'react-native-vector-icons/Entypo'
 import Iconc from 'react-native-vector-icons/FontAwesome'
 import Icond from 'react-native-vector-icons/Feather'
-import { useFonts } from "expo-font";
+
 
 
 
@@ -19,14 +19,7 @@ import { useFonts } from "expo-font";
 export default function Layout() {
 
   
-  const [loaded] = useFonts({
-    myfont:require("../../assets/fonts/SF-Pro.ttf")
-  })
-
-  if(!loaded){
-    return null;
-
-  } 
+ 
 
   return (
     <>
@@ -76,7 +69,7 @@ function Logo() {
       >
         {/* <Icona name="hipchat" size={20} color={"black"} /> */}
         <Text style={styles.headText}>
-          <Text style={{ color: "#648DDB",fontFamily:"myfont",fontWeight:"bold" }}>Ch</Text>
+          <Text style={{ color: "#648DDB",fontWeight:"500" }}>Ch</Text>
           ats
         </Text>
       </View>
@@ -127,9 +120,8 @@ const styles = new StyleSheet.create({
 
   headText: {
     fontSize: responsiveFontSize(3),
-    fontWeight: "bold",
+    fontWeight: "500",
     color: "#09334E",
-    fontFamily:"myfont"
   },
   fab: {
     position: "absolute",
